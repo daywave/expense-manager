@@ -1,13 +1,13 @@
 const express = require('express');
+const middleman = require('./middleman');
+
 const app = express();
 const port = 3000;
 
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-  res.render('welcome');
-});
+app.use('/', middleman);
 
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });

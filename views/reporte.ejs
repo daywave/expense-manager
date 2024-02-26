@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Reporte</title>
+</head>
+
+<body>
+
+    <h1>Generador de Reporte</h1>
+
+    <form id="reportForm">
+        <label for="startDate">Fecha de Inicio:</label>
+        <input type="date" id="startDate" name="startDate" required>
+
+        <label for="endDate">Fecha Final:</label>
+        <input type="date" id="endDate" name="endDate" required>
+
+        <button type="button" onclick="generarReporte()">Enviar</button>
+    </form>
+
+    <div id="resultados">
+        <!-- Aquí se mostrarán los resultados -->
+    </div>
+
+    <script>
+        function generarReporte() {
+            // Obtener los valores ingresados por el usuario
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+
+            // Aquí podrías realizar alguna acción con las fechas, como enviarlas a un servidor para generar un informe
+
+            // Mostrar los valores ingresados por el usuario
+            document.getElementById('resultados').innerHTML = `
+                <h2>Resultados:</h2>
+                <p>Fecha de Inicio: ${startDate}</p>
+                <p>Fecha Final: ${endDate}</p>
+            `;
+        }
+    </script>
+
+</body>
+
+</html>

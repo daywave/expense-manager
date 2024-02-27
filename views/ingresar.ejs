@@ -68,14 +68,13 @@
             <p>¡Gracias por unirte a nosotros!</p>
             <p>Empieza a añadir tus gastos.</p>
         </section>
-        <form>
-
+        <form action="/guardar-datos" method="post">
             <label for="menuDesplegable">Elije una categoria:</label>
-            <select id="menuDesplegable" name="opciones">
-              <option value="opcion1">Tansporte</option>
-              <option value="opcion2">Entretenimiento</option>
-              <option value="opcion3">Ropa</option>
-              <option value="opcion4">Comida</option>
+            <select id="menuDesplegable" name="categoria">
+              <option value="transporte">Tansporte</option>
+              <option value="Entretenimiento">Entretenimiento</option>
+              <option value="Ropa">Ropa</option>
+              <option value="Comida">Comida</option>
               <option value="opcion5">Otros</option>
             </select> 
             

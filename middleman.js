@@ -1,17 +1,35 @@
-const express = require('express');
-const router = express.Router();
+const LocalStorage = require('node-localstorage').LocalStorage;
+const localStorage = new LocalStorage('./scratch');
 
-//Route 1
-router.get('/', (req, res) => {
-  res.render('welcome');
-});
+// Función para guardar los datos en localStorage
+function guardarDatos(req, res) {
+  const { categoria, fecha, cantidad } = req.body;
 
-router.get('/ingresar', (req, res) => {
-  res.render('ingresar');
-});
+  console.log('Guardando datos en localStorage:', { categoria, fecha, cantidad });
+  
+  // Guardar los datos en localStorage
+  let data = {
+    categoria,
+    fecha,
+    cantidad
+  };
+  let existingData = JSON.parse(localStorage.getItem('datos')) || [];
+  existingData.push(data);
+  localStorage.setItem('datos', JSON.stringify(existingData));
 
-router.get('/reporte', (req, res) => {
-  res.render('reporte');
-});
+  console.log('Datos guardados exitosamente.');
+  
+  res.redirect('/'); // Redireccionar a la página principal o a donde desees
+}
 
-module.exports = router;
+
+function obtenerDatos(req, res) {
+  // Obtener los datos del localStorage
+  let existingData = JSON.parse(localStorage.getItem('datos')) || [];
+  
+  console.log('Datos obtenidos de localStorage:', existingData);
+
+  res.json(existingData); // Enviar los datos como respuesta JSON
+}
+
+module.exports = { guardarDatos, obtenerDatos };

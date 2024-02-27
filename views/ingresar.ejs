@@ -12,14 +12,33 @@
         }
 
         header {
-            background-color: #333;
+            background-color: #1b5296;
             color: #fff;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px 0;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
 
         header h1 {
             margin: 0;
+        }
+
+        #subtitle{
+            color: #ffffff;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        header h4 a {
+            text-decoration: none; /* Elimina el subrayado del enlace */
+            color: inherit; /* Hereda el color del texto del elemento padre */
+        }
+
+        main h1{
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
         main {
@@ -47,20 +66,62 @@
             cursor: pointer;
         }
 
+        .card-body{
+            color:rgb(255, 255, 255);
+            font-size: large;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        p{
+            text-align: center;
+            font-size: large;
+            font-family: Verdana, Geneva, Tahoma, sans-serif; 
+        }
+
+        #enviar{
+            background-color: #1b5296; /* Color de fondo */
+            border: 2px solid white; /* Contorno blanco */
+            color: white; /* Color del texto */
+            padding: 10px 10px; /* Espacio interno */
+            font-size: 13px; /* Tamaño de la fuente */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Cambiar cursor al pasar por encima */
+        }
+
         footer {
-            background-color: #333;
+            background-color: #184883;
             color: #fff;
             text-align: center;
             padding: 10px 0;
             position: fixed;
             bottom: 0;
             width: 100%;
+            font-size: large;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        /* Estilos para los nombres de los desarrolladores */
+        .developers {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .developer-link {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .developer-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <header>
+        <h4 id="subtitle"><a href="/">Home</a></h4>
         <h1>Ingresar Gastos</h1>
+        <h4 id="subtitle"><a href="/reporte">Reporte</a></h4>
     </header>
     <main>
         <section class="welcome-section">
@@ -68,31 +129,33 @@
             <p>¡Gracias por unirte a nosotros!</p>
             <p>Empieza a añadir tus gastos.</p>
         </section>
-        <form action="/guardar-datos" method="post">
-            <label for="menuDesplegable">Elije una categoria:</label>
-            <select id="menuDesplegable" name="categoria">
-              <option value="transporte">Tansporte</option>
-              <option value="Entretenimiento">Entretenimiento</option>
-              <option value="Ropa">Ropa</option>
-              <option value="Comida">Comida</option>
-              <option value="opcion5">Otros</option>
-            </select> 
-            
-            <br><br>
-          
-            <label for="fecha">Fecha:</label>
-            <input type="date" id="fecha" name="fecha">
-            
-            <br><br>
-            
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" min="1">
-            
-            <br><br>
-            
-            <input type="submit" value="Enviar">
-          
-          </form>
+        <div style="background-color: skyblue; display: flex; justify-content: center; align-items: center; ">
+            <form action="/guardar-datos" method="post" style="padding-top: 20px; padding-bottom: 20px;">
+                <label for="menuDesplegable">Elije una categoria:</label>
+                <select id="menuDesplegable" name="categoria">
+                  <option value="transporte">Tansporte</option>
+                  <option value="Entretenimiento">Entretenimiento</option>
+                  <option value="Ropa">Ropa</option>
+                  <option value="Comida">Comida</option>
+                  <option value="opcion5">Otros</option>
+                </select> 
+                
+                <br><br>
+              
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha">
+                
+                <br><br>
+                
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad" min="1">
+                
+                <br><br>
+                
+                <input id="enviar" type="submit" value="Enviar">
+              
+              </form>
+        </div>
     </main>
     <footer>
         <p>&copy; 2024 Sistema de Costos. Todos los derechos reservados.</p>

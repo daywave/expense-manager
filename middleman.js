@@ -5,7 +5,7 @@ const localStorage = new LocalStorage('./scratch');
 function guardarDatos(req, res) {
   const { categoria, fecha, cantidad } = req.body;
 
-  console.log('Guardando datos en localStorage:', { categoria, fecha, cantidad });
+  //console.log('Guardando datos en localStorage:', { categoria, fecha, cantidad });
   
   // Guardar los datos en localStorage
   let data = {
@@ -17,7 +17,8 @@ function guardarDatos(req, res) {
   existingData.push(data);
   localStorage.setItem('datos', JSON.stringify(existingData));
 
-  console.log('Datos guardados exitosamente.');
+  //console.log('Datos guardados exitosamente.');
+  console.log('Datos guardados en localStorage:', localStorage.getItem('datos'));
   
   res.redirect('/'); // Redireccionar a la página principal o a donde desees
 }

@@ -8,8 +8,7 @@
 </head>
 
 <body>
-
-    <h1>Generador de Reporte</h1>
+    <h1>Reporte de Datos</h1>
 
     <form id="reportForm">
         <label for="startDate">Fecha de Inicio:</label>
@@ -27,21 +26,47 @@
 
     <script>
         function generarReporte() {
-            // Obtener los valores ingresados por el usuario
-            var startDate = document.getElementById('startDate').value;
-            var endDate = document.getElementById('endDate').value;
+  console.log('Entro a generar reporte');
 
-            // Aquí podrías realizar alguna acción con las fechas, como enviarlas a un servidor para generar un informe
+  // Obtener los valores ingresados por el usuario
+  var startDate = new Date(document.getElementById('startDate').value);
+  var endDate = new Date(document.getElementById('endDate').value);
 
-            // Mostrar los valores ingresados por el usuario
-            document.getElementById('resultados').innerHTML = `
-                <h2>Resultados:</h2>
-                <p>Fecha de Inicio: ${startDate}</p>
-                <p>Fecha Final: ${endDate}</p>
-            `;
-        }
+  // Obtener los datos del localStorage
+  let existingData = JSON.parse(localStorage.getItem('datos')) || [];
+
+  // Filtrar los datos por fecha
+  let filteredData = existingData.filter(dato => {
+    let datoDate = new Date(dato.fecha);
+    return datoDate >= startDate && datoDate <= endDate;
+  });
+
+  // Mostrar los valores ingresados por el usuario y los datos filtrados
+  let resultadosHTML = `
+    <h2>Resultados:</h2>
+    <p>Fecha de Inicio: ${startDate.toDateString()}</p>
+    <p>Fecha Final: ${endDate.toDateString()}</p>
+    <h3>Datos filtrados:</h3>
+  `;
+
+  // Recorrer los datos filtrados y agregarlos al HTML
+  filteredData.forEach(dato => {
+    resultadosHTML += `
+      <p>Categoría: ${dato.categoria ? dato.categoria : ''}</p>
+      <p>Fecha: ${dato.fecha}</p>
+      <p>Cantidad: ${dato.cantidad}</p>
+    `;
+
+    // Si la propiedad "categoria" tiene un valor, agregar una línea horizontal
+    if (dato.categoria) {
+      resultadosHTML += `<hr>`;
+    }
+  });
+
+  // Mostrar el HTML en el elemento "resultados"
+  document.getElementById('resultados').innerHTML = resultadosHTML;
+}
     </script>
-
 </body>
 
 </html>

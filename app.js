@@ -30,6 +30,13 @@ app.get('/reporte', (req, res) => {
   res.render('reporte');
 });
 
+app.get('/generar-reporte', (req, res) => {
+  const startDate = new Date(req.query.startDate);
+  const endDate = new Date(req.query.endDate);
+  const reporteHTML = middleman.generarReporte(startDate, endDate);
+  res.send(reporteHTML);
+});
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });

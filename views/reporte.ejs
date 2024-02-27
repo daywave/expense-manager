@@ -2,71 +2,55 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Reporte</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Datos</title>
 </head>
 
 <body>
-    <h1>Reporte de Datos</h1>
+  <h1>Reporte de Datos</h1>
+  <form id="reportForm">
+    <label for="startDate">Fecha de Inicio:</label>
+    <input type="date" id="startDate" name="startDate" required>
+    <label for="endDate">Fecha Final:</label>
+    <input type="date" id="endDate" name="endDate" required>
+    <button type="button" onclick="enviarFormulario()">Generar reporte</button>
+  </form>
+  <div id="resultados">
+    <!-- Aquí se mostrarán los resultados -->
+  </div>
 
-    <form id="reportForm">
-        <label for="startDate">Fecha de Inicio:</label>
-        <input type="date" id="startDate" name="startDate" required>
+  <script>
+    function enviarFormulario() {
+      var startDate = document.getElementById('startDate').value;
+      var endDate = document.getElementById('endDate').value;
 
-        <label for="endDate">Fecha Final:</label>
-        <input type="date" id="endDate" name="endDate" required>
+      /// Realizar una solicitud AJAX para obtener los datos del servidor
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'http://localhost:3000/obtener-datos?startDate=' + startDate + '&endDate=' + endDate, true);
 
-        <button type="button" onclick="generarReporte()">Enviar</button>
-    </form>
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            // Limpiar los resultados anteriores
+            document.getElementById('resultados').innerHTML = '';
 
-    <div id="resultados">
-        <!-- Aquí se mostrarán los resultados -->
-    </div>
-
-    <script>
-        function generarReporte() {
-  console.log('Entro a generar reporte');
-
-  // Obtener los valores ingresados por el usuario
-  var startDate = new Date(document.getElementById('startDate').value);
-  var endDate = new Date(document.getElementById('endDate').value);
-
-  // Obtener los datos del localStorage
-  let existingData = JSON.parse(localStorage.getItem('datos')) || [];
-
-  // Filtrar los datos por fecha
-  let filteredData = existingData.filter(dato => {
-    let datoDate = new Date(dato.fecha);
-    return datoDate >= startDate && datoDate <= endDate;
-  });
-
-  // Mostrar los valores ingresados por el usuario y los datos filtrados
-  let resultadosHTML = `
-    <h2>Resultados:</h2>
-    <p>Fecha de Inicio: ${startDate.toDateString()}</p>
-    <p>Fecha Final: ${endDate.toDateString()}</p>
-    <h3>Datos filtrados:</h3>
-  `;
-
-  // Recorrer los datos filtrados y agregarlos al HTML
-  filteredData.forEach(dato => {
-    resultadosHTML += `
-      <p>Categoría: ${dato.categoria ? dato.categoria : ''}</p>
-      <p>Fecha: ${dato.fecha}</p>
-      <p>Cantidad: ${dato.cantidad}</p>
-    `;
-
-    // Si la propiedad "categoria" tiene un valor, agregar una línea horizontal
-    if (dato.categoria) {
-      resultadosHTML += `<hr>`;
+            // Mostrar los resultados obtenidos del servidor
+            var data = JSON.parse(xhr.responseText);
+            data.forEach(function(item) {
+              var p = document.createElement('p');
+              p.textContent = 'Fecha: ' + item.fecha + ', Cantidad: ' + item.cantidad; // Cambiar "Valor" por "Cantidad"
+              document.getElementById('resultados').appendChild(p);
+          });
+          
+            console.error('Hubo un error al obtener los datos del servidor.');
+          }
+        }
+      };
+      xhr.send();
     }
-  });
+  </script>
 
-  // Mostrar el HTML en el elemento "resultados"
-  document.getElementById('resultados').innerHTML = resultadosHTML;
-}
-    </script>
 </body>
 
 </html>

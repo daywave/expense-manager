@@ -33,4 +33,5 @@ function obtenerDatos(req, res) {
   res.json(existingData); // Enviar los datos como respuesta JSON
 }
 
+
 module.exports = { guardarDatos, obtenerDatos };

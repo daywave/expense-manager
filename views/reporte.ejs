@@ -110,6 +110,23 @@
     .developer-link:hover {
         text-decoration: underline;
     }
+
+    /* Estilos para la tabla */
+    table {
+      border-collapse: collapse;
+      width: 80%; /* Ancho de la tabla */
+      margin: 0 auto; /* Centrar la tabla en la página */
+    }
+
+    th, td {
+      border: 1px solid black; /* Borde de 1px sólido negro */
+      padding: 8px; /* Espaciado interno */
+      text-align: left; /* Alinear texto a la izquierda */
+    }
+
+    th {
+      background-color: #4875ac; /* Color de fondo para los encabezados */
+    }
 </style>
 </head>
 
@@ -148,28 +165,59 @@
       xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
-            // Limpiar los resultados anteriores
-            document.getElementById('resultados').innerHTML = '';
+          // Limpiar los resultados anteriores
+          document.getElementById('resultados').innerHTML = '';
 
-            // Mostrar los resultados obtenidos del servidor
-            var data = JSON.parse(xhr.responseText);
+          // Mostrar los resultados obtenidos del servidor
+          var data = JSON.parse(xhr.responseText);
+          if (data.length > 0) {
+            var table = document.createElement('table');
+            var headerRow = table.insertRow();
+            var headers = ['Concepto', 'Cantidad', 'Fecha'];
+
+            // Crear encabezados de tabla
+            headers.forEach(function(headerText) {
+              var header = document.createElement('th');
+              header.textContent = headerText;
+              headerRow.appendChild(header);
+            });
+
+            // Agregar datos a la tabla
             data.forEach(function(item) {
-              var p = document.createElement('p');
-              p.textContent = 'Fecha: ' + item.fecha + ', Cantidad: ' + item.cantidad; // Cambiar "Valor" por "Cantidad"
-              document.getElementById('resultados').appendChild(p);
-          });
-          
-            console.error('Hubo un error al obtener los datos del servidor.');
+              var row = table.insertRow();
+              var cellConcepto = row.insertCell();
+              var cellCantidad = row.insertCell();
+              var cellFecha = row.insertCell();
+
+              cellConcepto.textContent = item.categoria;
+              cellCantidad.textContent = item.cantidad;
+              cellFecha.textContent = item.fecha;
+            });
+
+            document.getElementById('resultados').appendChild(table);
+          } else {
+            document.getElementById('resultados').textContent = 'No se encontraron resultados.';
           }
+        } else {
+          console.error('Hubo un error al obtener los datos del servidor.');
+        }
         }
       };
       xhr.send();
     }
   </script>
 
-  <footer>
-    <p>&copy; 2024 Sistema de Costos. Todos los derechos reservados.</p>
-  </footer>
+<footer>
+  <p>&copy; 2024 Sistema de Costos. Todos los derechos reservados.</p>
+  <div class="developers">
+      devs:
+      <a href="https://www.instagram.com/ddonovn?igsh=MTdjdHVmd2xydXpncQ%3D%3D&utm_source=qr" class="developer-link">@ddonovn</a>
+      <a href="https://www.instagram.com/sandyolimpia02?igsh=YzdyczlyeGozODF2" class="developer-link">@sandyolimpia02</a>
+      <a href="https://www.instagram.com/luis_o._jimenez?igsh=dXFydHg0cnh6OTQy" class="developer-link">@luis_o_jimenez</a>
+      <a href="https://www.instagram.com/fxxrmxxd?igsh=eGdmZHQ2dTg2ZHRp" class="developer-link">@fxxrmxxd</a>
+      <a href="https://www.instagram.com/javidu.jpg?igsh=cnl6MXZsbWg4eTNt" class="developer-link">@javidu.jpg</a>
+  </div>
+</footer>
 
 </body>
 
